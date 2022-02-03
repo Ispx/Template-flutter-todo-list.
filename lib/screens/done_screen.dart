@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 
 import '../shared/models/todo_item.dart';
 import 'components/todo_item_list_tile.dart';
@@ -31,18 +32,19 @@ class _DoneScreenState extends State<DoneScreen> {
           textAlign: TextAlign.center,
           style: TextStyle(color: Colors.blue, fontSize: 24),
         ),
-        Flexible(
-          child: ListView.builder(
-            itemCount: widget.itemList.length,
-            itemBuilder: (context, index) {
-              final item = widget.itemList[index];
-
-              return ToDoItemListTile(
-                item: item,
-                onRemoveItem: () => widget.onRemoveItem(item),
-                onChangeItem: () => widget.onResetItem(item),
-              );
-            },
+        Observer(
+          builder: (context) => Flexible(
+            child: ListView.builder(
+              itemCount: widget.itemList.length,
+              itemBuilder: (context, index) {
+                final item = widget.itemList[index];
+                return ToDoItemListTile(
+                  item: item,
+                  onRemoveItem: () => widget.onRemoveItem(item),
+                  onChangeItem: () => widget.onResetItem(item),
+                );
+              },
+            ),
           ),
         ),
       ],

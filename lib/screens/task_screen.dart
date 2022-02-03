@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 
 import '../shared/models/todo_item.dart';
 import 'components/todo_item_list_tile.dart';
@@ -65,19 +66,21 @@ class _TaskScreenState extends State<TaskScreen> {
               ],
             ),
           ),
-          Flexible(
-            child: ListView.builder(
-              itemCount: widget.itemList.length,
-              itemBuilder: (context, index) {
-                final item = widget.itemList[index];
-                return ToDoItemListTile(
-                  item: item,
-                  onRemoveItem: () => widget.onRemoveItem(item),
-                  onChangeItem: () => widget.onCompleteItem(item),
-                );
-              },
+          Observer(
+            builder: (context) => Flexible(
+              child: ListView.builder(
+                itemCount: widget.itemList.length,
+                itemBuilder: (context, index) {
+                  final item = widget.itemList[index];
+                  return ToDoItemListTile(
+                    item: item,
+                    onRemoveItem: () => widget.onRemoveItem(item),
+                    onChangeItem: () => widget.onCompleteItem(item),
+                  );
+                },
+              ),
             ),
-          ),
+          )
         ],
       ),
     );
